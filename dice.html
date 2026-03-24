@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pretty Dice Roller</title>
+<style>
+body {
+    background: linear-gradient(135deg, #ff9cf3, #7a5fff);
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+h1 {
+    margin-bottom: 10px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px #ff77ff66;
+}
+
+label, input, select, button {
+    margin: 5px;
+    font-size: 1em;
+}
+
+.dice-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.dice {
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+    min-width: 60px;
+    box-shadow: 3px 3px 10px #00000044;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+button {
+    background-color: #ff77ff;
+    color: #2b1a0f;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #ffb3ff;
+}
+
+.sum {
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-shadow: 1px 1px #7a5fff44;
+}
+
+select {
+    width: 60px;
+    height: 30px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 0;
+}
+
+option {
+    padding: 0;
+    margin: 0;
+}
+</style>
+</head>
+<body>
+
+<h1>Pretty Dice Roller</h1>
+
+<div class="controls">
+    <label>Number of Dice: <input type="number" id="numDice" value="2" min="1" max="20"></label>
+    <button onclick="generateDice()">Generate Dice</button>
+    <button onclick="clearDice()">Clear Dice</button>
+</div>
+
+<div id="diceFields" class="dice-container"></div>
+
+<button onclick="rollDice()" style="margin-top:10px;">Roll Dice</button>
+
+<div class="sum" id="totalSum"></div>
+
+<script>
+const vaporwaveColors = [
+    '#ff77ff', '#ffb3ff', '#7a5fff', '#66ffcc',
+    '#ff99cc', '#ffccff', '#a266ff', '#ff66ff'
+];
+
+function generateDice() {
+    const container = document.getElementById('diceFields');
+    container.innerHTML = '';
+    const numDice = parseInt(document.getElementById('numDice').value);
+
+    for (let i = 0; i < numDice; i++) {
+        const diceDiv = document.createElement('div');
+        diceDiv.className = 'dice';
+
+        const rollDisplay = document.createElement('div');
+        rollDisplay.className = 'roll-display';
+        rollDisplay.textContent = '0'; // initial roll
+
+        const sidesInput = document.createElement('input');
+        sidesInput.type = 'number';
+        sidesInput.placeholder = 'Sides';
+        sidesInput.min = 2;
+        sidesInput.value = 6;
+        sidesInput.style.width = '60px';
+
+        const colorSelect = document.createElement('select');
+        vaporwaveColors.forEach(color => {
+            const option = document.createElement('option');
+            option.value = color;
+            option.style.backgroundColor = color;
+            colorSelect.appendChild(option);
+        });
+        colorSelect.value = vaporwaveColors[Math.floor(Math.random() * vaporwaveColors.length)];
+        diceDiv.style.backgroundColor = colorSelect.value;
+
+        colorSelect.onchange = () => {
+            diceDiv.style.backgroundColor = colorSelect.value;
+        }
+
+        diceDiv.appendChild(rollDisplay);
+        diceDiv.appendChild(sidesInput);
+        diceDiv.appendChild(colorSelect);
+        container.appendChild(diceDiv);
+    }
+}
+
+function rollDice() {
+    const container = document.getElementById('diceFields');
+    const diceDivs = container.getElementsByClassName('dice');
+    let total = 0;
+
+    for (let div of diceDivs) {
+        const sides = parseInt(div.children[1].value);
+        const color = div.children[2].value;
+        const roll = Math.floor(Math.random() * sides) + 1;
+        total += roll;
+
+        div.children[0].textContent = `${roll} (${sides})`; // update roll display
+        div.style.backgroundColor = color;
+    }
+
+    document.getElementById('totalSum').textContent = 'Total: ' + total;
+}
+
+function clearDice() {
+    document.getElementById('diceFields').innerHTML = '';
+    document.getElementById('totalSum').textContent = '';
+}
+</script>
+
+</body>
+</html>
