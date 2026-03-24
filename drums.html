@@ -18,46 +18,82 @@ main::-webkit-scrollbar-track {
   background-color: #260C2A;
 }
 
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 20px;
-      padding: 20px;
-      background-color: #260C2A;
-      color: #C7A9D3;
-      overflow-x: hidden;
+  <style>
+  body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #260C2A;
+    color: #C7A9D3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  main {
+    width: 100%;
+    max-width: 1000px; /* max width for large screens */
+    padding: 20px;
+    box-sizing: border-box; /* includes padding in width */
+  }
+
+  h2.vaporwave-text {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  canvas {
+    width: 100%;   /* responsive canvas */
+    max-width: 1000px;
+    height: auto;  /* maintain aspect ratio */
+    border: 3px solid white;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .button {
+    background-color: #6d4d86;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .button:hover {
+    background-color: #9b35c8;
+  }
+
+  .input-container input {
+    width: 120px;
+  }
+
+  @media (max-width: 600px) {
+    h2.vaporwave-text {
+      font-size: 1.5rem;
     }
 
-    header {
-      background-color: #15061C;
-      color: #F8E5FF;
-      text-align: center;
-      padding: 50px 0;
+    .button {
+      padding: 8px 12px;
+      font-size: 14px;
     }
 
-    nav {
-      background-color: #15061C;
-      text-align: center;
-      padding: 10px 0;
+    .input-container input {
+      width: 100px;
     }
-
-    nav a {
-      color: #F8E5FF;
-      text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
-      font-size: 18px;
-      transition: color 0.3s;
-    }
-
-    nav a:hover {
-      color: #B679C5;
-    }
-
-    main {
-      padding: 40px;
-      overflow: auto; /* Enable scrolling for the main content area */
-    }
-
+  }
     /* Additional vaporwave-inspired styling */
     .vaporwave-text {
       font-family: 'Courier New', monospace;
