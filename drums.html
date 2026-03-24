@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Music Tool Home Page</title>
+  <style>
+/* Move scrollbar to the left and style */
+main::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+main::-webkit-scrollbar-thumb {
+  background-color: #B679C5;
+  border-radius: 6px;
+}
+
+main::-webkit-scrollbar-track {
+  background-color: #260C2A;
+}
+
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #260C2A;
+      color: #C7A9D3;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #15061C;
+      color: #F8E5FF;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    nav {
+      background-color: #15061C;
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: #F8E5FF;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #B679C5;
+    }
+
+    main {
+      padding: 40px;
+      overflow: auto; /* Enable scrolling for the main content area */
+    }
+
+    /* Additional vaporwave-inspired styling */
+    .vaporwave-text {
+      font-family: 'Courier New', monospace;
+      font-size: 45px;
+      color: #B679C5;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .vaporwave-button {
+      background-color: #B679C5;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .vaporwave-button:hover {
+      background-color: #DFA1E6;
+    }
+
+  </style>
+</head>
+<body>
+  <main>
+    <section id="drum">
+      <h2 class="vaporwave-text">Drum Pattern Generator</h2>
+      <!DOCTYPE html>
+<html>
+<head>
+  <title>Drum Pattern Generator</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, #b571e3, #8b299d);
+      font-family: "Verdana", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+    }
+
+    canvas {
+      display: block;
+      border: 3px solid white;
+    }
+
+    #patternContainer {
+      text-align: center;
+      color: white;
+      padding: 20px;
+      font-size: 32px;
+    }
+
+    .button-container {
+      display: flex;
+      margin-top: 20px;
+    }
+
+    .button {
+      background-color: #6d4d86;
+      color: white;
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #9b35c8;
+    }
+
+    .input-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-left: 10px;
+    }
+
+    input[type="number"] {
+      background-color: #fda4f7;
+      color: black;
+      border: none;
+      font-size: 16px;
+      padding: 8px;
+      border-radius: 5px;
+    }
+
+    textarea {
+      background-color: #fda4f7;
+      color: black;
+      border: none;
+      font-size: 14px;
+      padding: 10px;
+      margin: 10px;
+      width: 90%;
+      height: 100px;
+      resize: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="patternContainer">Pattern: <span id="patternText"></span></div>
+  <canvas id="canvas" width="1000" height="600"></canvas>
+  <div class="button-container">
+    <div class="input-container">
+      <input id="patternLengthInput" type="number" placeholder="Pattern Length">
+    </div>
+    <button class="button" onclick="generatePattern()">Generate Pattern</button>
+    <button class="button" onclick="addCircle(100, 100, circleRadii[0], circleColors[0])">Kick</button>
+    <button class="button" onclick="addCircle(100, 200, circleRadii[1], circleColors[1])">Snare</button>
+    <button class="button" onclick="addCircle(100, 300, circleRadii[2], circleColors[2])">Hi-Hat</button>
+    <button class="button" onclick="addCircle(100, 400, circleRadii[3], circleColors[3])">Tom</button>
+    <button class="button" onclick="addCircle(100, 500, circleRadii[4], circleColors[4])">Cymbal</button>
+    <button class="button" onclick="removeCircle()">Remove Drum</button>
+  </div>
+
+  <div style="text-align: center; margin-top: 20px; color: white;">
+    <h2>Instructions:</h2>
+    <p>1. Click on the drum buttons to add drums (circles) to the canvas.</p>
+    <p>2. Drag the circles to reposition them within the canvas.</p>
+    <p>3. Use the "Remove Drum" button to remove the last added drum (circle).</p>
+    <p>4. Enter a positive pattern length and click "Generate Pattern" to create a random drum pattern.</p>
+  </div>
+
+    <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const circleColors = ['#b571e3', '#a148b4', '#8b299d', '#6d1c7c', '#471053'];
+    const circleRadii = [120, 100, 70, 80, 90];
+    const patternTextSize = 20;
+    const patternTextX = canvas.width / 2;
+    const patternTextY = 30;
+    let isDragging = false;
+    let draggedCircle = null;
+
+    class DraggableCircle {
+      static count = 0;
+
+      constructor(x, y, radius, color) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.circleNumber = ++DraggableCircle.count;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.font = '58px Arial';
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(this.circleNumber.toString(), this.x, this.y);
+      }
+
+      checkCollision(x, y) {
+        const dx = x - this.x;
+        const dy = y - this.y;
+        return dx * dx + dy * dy < this.radius * this.radius;
+      }
+    }
+
+    const circles = [];
+
+    function addCircle(x, y, radius, color) {
+      circles.push(new DraggableCircle(x, y, radius, color));
+      drawCircles();
+    }
+
+    function removeCircle() {
+      if (circles.length > 0) {
+        circles.pop();
+        DraggableCircle.count--;
+        updateCircleNumbers();
+        drawCircles();
+      }
+    }
+
+    function updateCircleNumbers() {
+      circles.forEach((circle, index) => (circle.circleNumber = index + 1));
+    }
+
+    function drawCircles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      circles.forEach(circle => circle.draw());
+    }
+
+    function generatePattern() {
+      const patternLengthInput = document.getElementById('patternLengthInput');
+      const patternLength = parseInt(patternLengthInput.value, 10);
+
+      if (isNaN(patternLength) || patternLength <= 0) {
+        alert('Invalid input! Please enter a positive number.');
+        return;
+      }
+
+      if (circles.length === 0) {
+        alert('Add drums to generate a pattern.');
+        return;
+      }
+
+      let pattern = '';
+      for (let i = 0; i < patternLength; i++) {
+        const drumNumber = Math.floor(Math.random() * circles.length);
+        pattern += circles[drumNumber].circleNumber + ', ';
+      }
+
+      pattern = pattern.slice(0, -2); // Remove the trailing comma and space
+      drawCircles();
+      drawPattern(pattern);
+    }
+
+    function drawPattern(patternText) {
+      const patternTextElement = document.getElementById('patternText');
+      patternTextElement.innerHTML = patternText;
+
+      ctx.font = `${patternTextSize}px Arial`;
+      ctx.fillStyle = 'white';
+      ctx.textAlign = 'center';
+
+
+      const largeNumbers = [];
+      for (let i = 1; i <= circles.length; i++) {
+        const regex = new RegExp(i.toString(), 'g');
+        if (patternText.match(regex)) {
+          largeNumbers.push(i);
+
+        }
+      }
+
+
+      largeNumbers.forEach(num => {
+        const circle = circles[num - 1];
+        ctx.beginPath();
+        ctx.arc(circle.x, circle.y, circle.radius + 5, 0, 2 * Math.PI);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'white';
+        ctx.stroke();
+      });
+    }
+
+    canvas.addEventListener('touchstart', e => {
+      const touch = e.touches[0];
+      const touchX = touch.pageX - canvas.offsetLeft;
+      const touchY = touch.pageY - canvas.offsetTop;
+
+      for (let i = circles.length - 1; i >= 0; i--) {
+        const circle = circles[i];
+        if (circle.checkCollision(touchX, touchY)) {
+          isDragging = true;
+          draggedCircle = circle;
+          break;
+        }
+      }
+    });
+
+    canvas.addEventListener('touchmove', e => {
+      if (isDragging) {
+        const touch = e.touches[0];
+        draggedCircle.x = touch.pageX - canvas.offsetLeft;
+        draggedCircle.y = touch.pageY - canvas.offsetTop;
+        drawCircles();
+      }
+    });
+
+    canvas.addEventListener('touchend', () => {
+      isDragging = false;
+      draggedCircle = null;
+    });
+
+  </script>
+</body>
+</html>
+
+ 
